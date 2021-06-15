@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LogsModule } from './logs/logs.module';
 import { SuppliesModule } from './supplies/supplies.module';
+import { SupplyTypesModule } from './supply-types/supply-types.module';
 
 require('dotenv').config();
 
@@ -15,7 +16,8 @@ require('dotenv').config();
       useFindAndModify: false,
     }),
     LogsModule,
-    SuppliesModule
+    SuppliesModule,
+    SupplyTypesModule
   ],
   controllers: [AppController],
   providers: [AppService],
