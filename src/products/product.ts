@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { prop } from "@typegoose/typegoose";
 import { Supply } from "../supplies/supply";
 
