@@ -12,6 +12,9 @@ export class Product {
     supplies: Supply[];
 
     @prop()
+    qty?: number;
+
+    @prop()
     createdAt?: Date;
 
     @prop()
