@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { LogsModule } from './logs/logs.module';
 import { SuppliesModule } from './supplies/supplies.module';
 import { SupplyTypesModule } from './supply-types/supply-types.module';
+import { SupplyMeasureTypesModule } from './supply-measure-types/supply-measure-types.module';
 
 require('dotenv').config();
 
@@ -17,7 +18,8 @@ require('dotenv').config();
     }),
     LogsModule,
     SuppliesModule,
-    SupplyTypesModule
+    SupplyTypesModule,
+    SupplyMeasureTypesModule
   ],
   controllers: [AppController],
   providers: [AppService],
