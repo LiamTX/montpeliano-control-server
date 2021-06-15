@@ -3,6 +3,7 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { BaseService } from 'src/shared/base.service';
 import { Supply } from './supply';
+import { mapSeries } from 'p-iteration';
 
 @Injectable()
 export class SuppliesService extends BaseService<Supply> {
