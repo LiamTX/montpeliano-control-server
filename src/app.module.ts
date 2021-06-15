@@ -6,6 +6,8 @@ import { LogsModule } from './logs/logs.module';
 import { SuppliesModule } from './supplies/supplies.module';
 import { SupplyTypesModule } from './supply-types/supply-types.module';
 import { SupplyMeasureTypesModule } from './supply-measure-types/supply-measure-types.module';
+import { ProductModule } from './product/product.module';
+import { ProductsModule } from './products/products.module';
 
 require('dotenv').config();
 
@@ -19,7 +21,9 @@ require('dotenv').config();
     LogsModule,
     SuppliesModule,
     SupplyTypesModule,
-    SupplyMeasureTypesModule
+    SupplyMeasureTypesModule,
+    ProductModule,
+    ProductsModule
   ],
   controllers: [AppController],
   providers: [AppService],
