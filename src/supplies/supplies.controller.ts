@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { SuppliesService } from './supplies.service';
 import { Supply } from './supply';
 
+@UsePipes(ValidationPipe)
 @Controller('supplies')
 export class SuppliesController {
     constructor(private readonly suppliesService: SuppliesService) { }
