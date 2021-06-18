@@ -1,15 +1,63 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { format } from 'date-fns';
 import { InjectModel } from 'nestjs-typegoose';
+import { PROCESS_MESSAGES } from 'src/logs/log';
+import { LogsService } from 'src/logs/logs.service';
 import { BaseService } from '../shared/base.service';
+import { ISupplyEntryDTO } from './dto/ISupplyEntry.dto';
+import { ISupplyOutPutDTO } from './dto/ISupplyOutPut.dto';
 import { Supply } from './supply';
-import { mapSeries } from 'p-iteration';
 
 @Injectable()
 export class SuppliesService extends BaseService<Supply> {
     constructor(
-        @InjectModel(Supply) private readonly supplyModel: ReturnModelType<typeof Supply>
+        @InjectModel(Supply) private readonly supplyModel: ReturnModelType<typeof Supply>,
+        private readonly logService: LogsService
     ) {
         super(supplyModel);
+    }
+
+    async supplyEntry({ code, qty }: ISupplyEntryDTO) {
+        const supply = await this.supplyModel.findOne({ code });
+        if (!supply) {
+            throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
+        }
+
+        supply.qty += qty;
+        await this.update(supply._id, supply);
+
+        const { name, measureType } = supply;
+        this.logService.create({
+            targetCode: supply.code,
+            targetName: supply.name,
+            description: PROCESS_MESSAGES.SUPPLY_ENTRY({
+                name,
+                qty,
+                measureType
+            })
+        });
+    }
+
+    async supplyOutPut({ code, qty }: ISupplyOutPutDTO) {
+        const supply = await this.supplyModel.findOne({ code });
+        if (!supply) {
+            throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
+        }
+
+        // TODO verify if supply qty go to < 0
+        supply.qty -= qty;
+        await this.update(supply._id, supply);
+
+        const { name, measureType } = supply;
+        this.logService.create({
+            targetCode: supply.code,
+            targetName: supply.name,
+            description: PROCESS_MESSAGES.SUPPLY_OUTPUT({
+                name,
+                qty,
+                measureType
+            })
+        });
     }
 }

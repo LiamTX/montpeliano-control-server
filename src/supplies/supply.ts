@@ -3,7 +3,7 @@ import { IsNotEmpty } from "class-validator";
 
 export class Supply {
     @IsNotEmpty()
-    @prop()
+    @prop({ unique: true })
     code: string;
 
     @IsNotEmpty()
@@ -18,7 +18,7 @@ export class Supply {
     @prop()
     measureType: string;
 
-    @prop()
+    @prop({ default: 0 })
     qty?: number;
 
     @prop()
