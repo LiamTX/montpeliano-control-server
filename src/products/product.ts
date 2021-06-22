@@ -10,7 +10,7 @@ export class Product {
     name: string;
 
     @prop()
-    supplies: Supply[];
+    supplies: { code: string, name: string }[];
 
     @prop()
     qty?: number;

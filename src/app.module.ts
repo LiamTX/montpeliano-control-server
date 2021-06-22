@@ -7,6 +7,8 @@ import { SuppliesModule } from './supplies/supplies.module';
 import { SupplyTypesModule } from './supply-types/supply-types.module';
 import { SupplyMeasureTypesModule } from './supply-measure-types/supply-measure-types.module';
 import { ProductsModule } from './products/products.module';
+import { UsersModule } from './users/users.module';
+import { JwtModule } from './jwt/jwt.module';
 
 require('dotenv').config();
 
@@ -21,7 +23,9 @@ require('dotenv').config();
     SuppliesModule,
     SupplyTypesModule,
     SupplyMeasureTypesModule,
-    ProductsModule
+    ProductsModule,
+    UsersModule,
+    JwtModule
   ],
   controllers: [AppController],
   providers: [AppService],
