@@ -18,7 +18,7 @@ export class SuppliesService extends BaseService<Supply> {
         super(supplyModel);
     }
 
-    async supplyEntry({ code, qty }: ISupplyEntryDTO) {
+    async supplyEntry({ code, qty, value }: ISupplyEntryDTO) {
         const supply = await this.supplyModel.findOne({ code });
         if (!supply) {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
@@ -31,6 +31,7 @@ export class SuppliesService extends BaseService<Supply> {
         this.logService.create({
             targetCode: supply.code,
             targetName: supply.name,
+            value,
             description: PROCESS_MESSAGES.SUPPLY_ENTRY({
                 name,
                 qty,

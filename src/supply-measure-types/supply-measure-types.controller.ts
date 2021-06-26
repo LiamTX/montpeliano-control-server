@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { SupplyMeasureType } from './supply-measure-type';
 import { SupplyMeasureTypesService } from './supply-measure-types.service';
 
+@UseGuards(AuthGuard)
 @Controller('supply-measure-types')
 export class SupplyMeasureTypesController {
     constructor(private readonly supplyMeasureTypesService: SupplyMeasureTypesService) {}

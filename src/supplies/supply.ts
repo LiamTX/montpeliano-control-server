@@ -18,6 +18,9 @@ export class Supply {
     @prop()
     measureType: string;
 
+    @prop()
+    value?: number;
+
     @prop({ default: 0 })
     qty?: number;
 

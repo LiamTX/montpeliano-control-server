@@ -1,8 +1,7 @@
 import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { Observable } from "rxjs";
-import { JwtService } from "src/jwt/jwt.service";
-import { UsersService } from "src/users/users.service";
+import { JwtService } from "../jwt/jwt.service";
+import { UsersService } from "../users/users.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,7 +16,7 @@ export class AuthGuard implements CanActivate {
 
         const header = req.header('Authorization');
         if (!header) {
-            throw new HttpException('missing_header', HttpStatus.UNAUTHORIZED);
+            throw new HttpException('authorization_required', HttpStatus.UNAUTHORIZED);
         };
 
         const parts = header.split(' ');
@@ -32,13 +31,12 @@ export class AuthGuard implements CanActivate {
 
         await this.jwtSevice.decodeToken(token).then(async decoded => {
             const user = await this.usersService.findOne({ username: decoded.username });
-            console.log(decoded);
-            console.log(user);
             if (!user) {
                 throw new HttpException('unauthorized', HttpStatus.UNAUTHORIZED);
             }
         }).catch(err => {
-            throw new HttpException('err_to_verify_token', HttpStatus.UNAUTHORIZED);
+            console.log(err);
+            throw new HttpException(`${err.message}`, HttpStatus.UNAUTHORIZED);
         });
 
         return true;

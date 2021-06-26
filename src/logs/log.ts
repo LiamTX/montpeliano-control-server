@@ -28,6 +28,9 @@ export class Log {
     description: string;
 
     @prop()
+    value?: string;
+
+    @prop()
     createdAt?: Date;
 
     @prop()

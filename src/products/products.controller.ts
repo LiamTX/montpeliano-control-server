@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../guards/auth.guard';
 import { Product } from './product';
 import { ProductsService } from './products.service';
 
+@UseGuards(AuthGuard)
 @Controller('products')
 export class ProductsController {
     constructor(private readonly productsService: ProductsService) {}
