@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 import { SupplyMeasureType } from './supply-measure-type';
 import { SupplyMeasureTypesService } from './supply-measure-types.service';
 

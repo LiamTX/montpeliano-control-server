@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { compareSync } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
-import { JwtService } from 'src/jwt/jwt.service';
+import { JwtService } from '../jwt/jwt.service';
 import { BaseService } from '../shared/base.service';
 import { User } from './user';
 

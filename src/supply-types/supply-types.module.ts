@@ -3,9 +3,9 @@ import { SupplyTypesService } from './supply-types.service';
 import { SupplyTypesController } from './supply-types.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { SupplyType } from './supply-type';
-import { User } from 'src/users/user';
-import { JwtService } from 'src/jwt/jwt.service';
-import { UsersService } from 'src/users/users.service';
+import { User } from '../users/user';
+import { JwtService } from '../jwt/jwt.service';
+import { UsersService } from '../users/users.service';
 
 @Module({
   imports: [

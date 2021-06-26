@@ -3,9 +3,9 @@ import { SupplyMeasureTypesService } from './supply-measure-types.service';
 import { SupplyMeasureTypesController } from './supply-measure-types.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { SupplyMeasureType } from './supply-measure-type';
-import { User } from 'src/users/user';
-import { UsersService } from 'src/users/users.service';
-import { JwtService } from 'src/jwt/jwt.service';
+import { User } from '../users/user';
+import { UsersService } from '../users/users.service';
+import { JwtService } from '../jwt/jwt.service';
 
 @Module({
   imports: [
