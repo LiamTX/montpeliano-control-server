@@ -27,16 +27,11 @@ export class SuppliesService extends BaseService<Supply> {
         supply.qty += qty;
         await this.update(supply._id, supply);
 
-        const { name, measureType } = supply;
         this.logService.create({
+            message: PROCESS_MESSAGES.SUPPLY_ENTRY,
             targetCode: supply.code,
             targetName: supply.name,
-            value,
-            description: PROCESS_MESSAGES.SUPPLY_ENTRY({
-                name,
-                qty,
-                measureType
-            })
+            value
         });
     }
 
@@ -50,15 +45,10 @@ export class SuppliesService extends BaseService<Supply> {
         supply.qty -= qty;
         await this.update(supply._id, supply);
 
-        const { name, measureType } = supply;
         this.logService.create({
+            message: PROCESS_MESSAGES.SUPPLY_OUTPUT,
             targetCode: supply.code,
-            targetName: supply.name,
-            description: PROCESS_MESSAGES.SUPPLY_OUTPUT({
-                name,
-                qty,
-                measureType
-            })
+            targetName: supply.name
         });
     }
 }

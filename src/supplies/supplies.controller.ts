@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe, Query } from '@nestjs/common';
 import { AuthGuard } from '../guards/auth.guard';
 import { ISupplyEntryDTO } from './dto/ISupplyEntry.dto';
 import { ISupplyOutPutDTO } from './dto/ISupplyOutPut.dto';
@@ -12,8 +12,8 @@ export class SuppliesController {
     constructor(private readonly suppliesService: SuppliesService) { }
 
     @Get()
-    async findAll() {
-        return await this.suppliesService.findAllAsync();
+    async findAll(@Query() filter: any) {
+        return await this.suppliesService.findAllAsync(filter);
     }
 
     @Post()

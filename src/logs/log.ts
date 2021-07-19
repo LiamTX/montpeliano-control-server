@@ -2,12 +2,8 @@ import { prop } from "@typegoose/typegoose";
 import { format } from "date-fns";
 
 export const PROCESS_MESSAGES = {
-    SUPPLY_ENTRY: (supply: { name: string, qty: number, measureType: string }) => {
-        return ``
-    },
-    SUPPLY_OUTPUT: (supply: { name: string, qty: number, measureType: string }) => {
-        return ``
-    }
+    SUPPLY_ENTRY: 'SUPPLY_ENTRY',
+    SUPPLY_OUTPUT: 'SUPPLY_OUTPUT'
 }
 
 export class Log {
@@ -25,7 +21,7 @@ export class Log {
     targetName: string;
 
     @prop()
-    description: string;
+    description?: string;
 
     @prop()
     value?: string;
