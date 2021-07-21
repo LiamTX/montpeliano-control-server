@@ -18,6 +18,17 @@ export class SuppliesService extends BaseService<Supply> {
         super(supplyModel);
     }
 
+    async create(supply: Supply) {
+        const supplyAlreadyExists = await this.supplyModel.findOne({
+            $or: [{ code: supply.code }, { name: supply.name }]
+        });
+        if (supplyAlreadyExists) {
+            throw new HttpException('supply_already_exists', HttpStatus.BAD_REQUEST);
+        }
+
+        return this.supplyModel.create(supply);
+    }
+
     async supplyEntry({ code, qty, value }: ISupplyEntryDTO) {
         const supply = await this.supplyModel.findOne({ code });
         if (!supply) {
