@@ -35,7 +35,7 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
         }
 
-        supply.qty += qty;
+        supply.qty += parseInt(qty);
         await this.update(supply._id, supply);
 
         this.logService.create({
@@ -52,8 +52,10 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
         }
 
+        console.log('oi', qty);
+
         // TODO verify if supply qty go to < 0
-        supply.qty -= qty;
+        supply.qty -= parseInt(qty);
         await this.update(supply._id, supply);
 
         this.logService.create({

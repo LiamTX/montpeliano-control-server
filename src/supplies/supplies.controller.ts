@@ -13,7 +13,7 @@ export class SuppliesController {
 
     @Get()
     async findAll(@Query() filter: any) {
-        return await this.suppliesService.findAllAsync(filter);
+        return await (await this.suppliesService.findAllAsync(filter)).reverse();
     }
 
     @Post()
