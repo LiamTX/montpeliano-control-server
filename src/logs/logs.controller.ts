@@ -9,6 +9,6 @@ export class LogsController {
 
     @Get()
     async findAll(@Query() filter: any) {
-        return await (await this.logsService.findAllAsync(filter)).reverse();
+        return (await this.logsService.findAllAsync(filter)).reverse();
     }
 }

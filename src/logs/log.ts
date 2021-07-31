@@ -10,7 +10,7 @@ export class Log {
     @prop()
     message: string;
 
-    @prop({ default: format(new Date(), 'dd/MM/yyyy kk:mm') })
+    @prop({ default: new Date() })
     date?: string;
 
     // TODO adc type to target
