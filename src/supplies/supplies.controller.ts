@@ -13,7 +13,17 @@ export class SuppliesController {
 
     @Get()
     async findAll(@Query() filter: any) {
-        return await (await this.suppliesService.findAllAsync(filter)).reverse();
+        return (await this.suppliesService.findAllAsync(filter)).reverse();
+    }
+
+    // @Get('/:id')
+    // async findOne(@Param('id') supplyId: string) {
+    //     return await this.suppliesService.findByIdAsync(supplyId);
+    // }
+
+    @Get('/:code')
+    async findOneByCode(@Param('code') code: string) {
+        return await this.suppliesService.findOne({ code });
     }
 
     @Post()
