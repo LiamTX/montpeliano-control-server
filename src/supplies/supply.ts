@@ -1,5 +1,5 @@
 import { prop } from "@typegoose/typegoose";
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsNumber } from "class-validator";
 
 export class Supply {
     @IsNotEmpty()
@@ -18,8 +18,9 @@ export class Supply {
     @prop()
     measureType: string;
 
+    @IsNotEmpty()
     @prop()
-    value?: number;
+    value: number;
 
     @prop({ default: 0 })
     qty?: number;

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe, Query, Put, Param } from '@nestjs/common';
 import { AuthGuard } from '../guards/auth.guard';
 import { ISupplyEntryDTO } from './dto/ISupplyEntry.dto';
 import { ISupplyOutPutDTO } from './dto/ISupplyOutPut.dto';
@@ -19,6 +19,11 @@ export class SuppliesController {
     @Post()
     async create(@Body() supply: Supply) {
         return await this.suppliesService.create(supply);
+    }
+
+    @Put()
+    async update(@Body() supply_update: Supply) {
+        return await this.suppliesService.updateSupply(supply_update);
     }
 
     @Post('/entry')

@@ -29,7 +29,7 @@ export class SuppliesService extends BaseService<Supply> {
         return this.supplyModel.create(supply);
     }
 
-    async supplyEntry({ code, qty, value }: ISupplyEntryDTO) {
+    async supplyEntry({ code, qty }: ISupplyEntryDTO) {
         const supply = await this.supplyModel.findOne({ code });
         if (!supply) {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
@@ -41,8 +41,7 @@ export class SuppliesService extends BaseService<Supply> {
         this.logService.create({
             message: PROCESS_MESSAGES.SUPPLY_ENTRY,
             targetCode: supply.code,
-            targetName: supply.name,
-            value
+            targetName: supply.name
         });
     }
 
@@ -52,9 +51,10 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
         }
 
-        console.log('oi', qty);
+        if (supply.qty == 0) {
+            throw new HttpException('supply_qty_null', HttpStatus.BAD_REQUEST);
+        }
 
-        // TODO verify if supply qty go to < 0
         supply.qty -= parseInt(qty);
         await this.update(supply._id, supply);
 
@@ -63,5 +63,14 @@ export class SuppliesService extends BaseService<Supply> {
             targetCode: supply.code,
             targetName: supply.name
         });
+    }
+
+    async updateSupply(supply_update: Supply) {
+        const supply = await this.supplyModel.findOne({ code: supply_update.code });
+        if (!supply) {
+            throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
+        }
+
+        await this.supplyModel.updateOne({ _id: supply._id }, supply_update);
     }
 }
