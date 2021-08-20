@@ -26,6 +26,9 @@ export class Supply {
     qty?: number;
 
     @prop()
+    valueQty?: number;
+
+    @prop()
     createdAt?: Date;
 
     @prop()

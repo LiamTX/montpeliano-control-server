@@ -29,16 +29,16 @@ export class SuppliesService extends BaseService<Supply> {
         return this.supplyModel.create(supply);
     }
 
-    async supplyEntry({ code, qty }: ISupplyEntryDTO) {
+    async supplyEntry({ code, qty, measureEntryType }: ISupplyEntryDTO) {
         const supply = await this.supplyModel.findOne({ code });
         if (!supply) {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
         }
 
-        supply.qty += parseInt(qty);
+        supply.qty += parseFloat(qty);
         await this.update(supply._id, supply);
 
-        this.logService.create({
+        await this.logService.create({
             message: PROCESS_MESSAGES.SUPPLY_ENTRY,
             targetCode: supply.code,
             targetName: supply.name
@@ -55,10 +55,12 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_qty_null', HttpStatus.BAD_REQUEST);
         }
 
-        supply.qty -= parseInt(qty);
+        console.log(qty);
+
+        supply.qty -= qty;
         await this.update(supply._id, supply);
 
-        this.logService.create({
+        await this.logService.create({
             message: PROCESS_MESSAGES.SUPPLY_OUTPUT,
             targetCode: supply.code,
             targetName: supply.name

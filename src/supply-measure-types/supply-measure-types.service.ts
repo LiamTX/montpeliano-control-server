@@ -16,10 +16,23 @@ export class SupplyMeasureTypesService extends BaseService<SupplyMeasureType> {
         const supplyTypeMeasureExists = await this.supplyMeasureType.findOne({
             $or: [{ code: supplyMeasureType.code }, { name: supplyMeasureType.name }]
         });
-        if(supplyTypeMeasureExists) {
+        if (supplyTypeMeasureExists) {
             throw new BadRequestException('supply_measure_type_already_exists');
         }
 
         return await this.supplyMeasureType.create(supplyMeasureType);
+    }
+
+    async loteCreate(supplyMeasureTypes: SupplyMeasureType[]) {
+        for (let supplyMeasureType of supplyMeasureTypes) {
+            const supplyTypeMeasureExists = await this.supplyMeasureType.findOne({
+                $or: [{ code: supplyMeasureType.code }, { name: supplyMeasureType.name }]
+            });
+            if (supplyTypeMeasureExists) {
+                throw new BadRequestException('supply_measure_type_already_exists');
+            }
+
+            await this.supplyMeasureType.create(supplyMeasureType);
+        }
     }
 }

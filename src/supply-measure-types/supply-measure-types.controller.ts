@@ -6,7 +6,7 @@ import { SupplyMeasureTypesService } from './supply-measure-types.service';
 @UseGuards(AuthGuard)
 @Controller('supply-measure-types')
 export class SupplyMeasureTypesController {
-    constructor(private readonly supplyMeasureTypesService: SupplyMeasureTypesService) {}
+    constructor(private readonly supplyMeasureTypesService: SupplyMeasureTypesService) { }
 
     @Get()
     async findAll() {
@@ -16,5 +16,10 @@ export class SupplyMeasureTypesController {
     @Post()
     async create(@Body() supplyMeasureType: SupplyMeasureType) {
         return await this.supplyMeasureTypesService.create(supplyMeasureType);
+    }
+
+    @Post('/lote')
+    async loteCreate(@Body() supplyMeasureTypes: SupplyMeasureType[]) {
+        return await this.supplyMeasureTypesService.loteCreate(supplyMeasureTypes);
     }
 }
