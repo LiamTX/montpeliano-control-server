@@ -25,7 +25,7 @@ export class Supply {
     @prop({ default: 0 })
     qty?: number;
 
-    @prop()
+    @prop({ default: 0 })
     valueQty?: number;
 
     @prop()

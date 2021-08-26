@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { format } from 'date-fns';
 import { InjectModel } from 'nestjs-typegoose';
+import { mapSeries } from 'p-iteration';
 import { PROCESS_MESSAGES } from '../logs/log';
 import { LogsService } from '../logs/logs.service';
 import { BaseService } from '../shared/base.service';
@@ -36,6 +37,9 @@ export class SuppliesService extends BaseService<Supply> {
         }
 
         supply.qty += parseFloat(qty);
+        for (let i = 0; i < parseFloat(qty); i++) {
+            supply.valueQty = supply.valueQty + supply.value;
+        }
         await this.update(supply._id, supply);
 
         await this.logService.create({
@@ -55,9 +59,10 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_qty_null', HttpStatus.BAD_REQUEST);
         }
 
-        console.log(qty);
-
         supply.qty -= qty;
+        for (let i = 0; i < qty; i++) {
+            supply.valueQty = supply.valueQty - supply.value;
+        }
         await this.update(supply._id, supply);
 
         await this.logService.create({
