@@ -36,10 +36,13 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
         }
 
+        // supply.qty += parseFloat(qty);
+        // for (let i = 0; i < parseFloat(qty); i++) {
+        //     supply.valueQty = supply.valueQty + supply.value;
+        // }
         supply.qty += parseFloat(qty);
-        for (let i = 0; i < parseFloat(qty); i++) {
-            supply.valueQty = supply.valueQty + supply.value;
-        }
+        const count = supply.value / parseFloat(qty);
+        supply.valueQty = count + supply.valueQty;
         await this.update(supply._id, supply);
 
         await this.logService.create({
@@ -59,10 +62,13 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_qty_null', HttpStatus.BAD_REQUEST);
         }
 
-        supply.qty -= qty;
-        for (let i = 0; i < qty; i++) {
-            supply.valueQty = supply.valueQty - supply.value;
-        }
+        supply.qty -= parseFloat(qty);
+        const count = supply.value / parseFloat(qty);
+        supply.valueQty = count - supply.valueQty;
+        // supply.valueQty = supply
+        // for (let i = 0; i < qty; i++) {
+        //     supply.valueQty = supply.valueQty - supply.value;
+        // }
         await this.update(supply._id, supply);
 
         await this.logService.create({
