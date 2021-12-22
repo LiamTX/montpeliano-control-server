@@ -30,26 +30,35 @@ export class SuppliesService extends BaseService<Supply> {
         return this.supplyModel.create(supply);
     }
 
-    async supplyEntry({ code, qty, measureEntryType }: ISupplyEntryDTO) {
+    async supplyEntry({ code, qty }: ISupplyEntryDTO) {
         const supply = await this.supplyModel.findOne({ code });
         if (!supply) {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
         }
 
         // supply.qty += parseFloat(qty);
-        // for (let i = 0; i < parseFloat(qty); i++) {
-        //     supply.valueQty = supply.valueQty + supply.value;
-        // }
-        supply.qty += parseFloat(qty);
-        const count = supply.value / parseFloat(qty);
-        supply.valueQty = count + supply.valueQty;
-        await this.update(supply._id, supply);
+        // console.log(supply.value);
+        // const count = supply.value / 0.300;
 
-        await this.logService.create({
-            message: PROCESS_MESSAGES.SUPPLY_ENTRY,
-            targetCode: supply.code,
-            targetName: supply.name
-        });
+        // console.log(count);
+
+        // supply.valueQty = (count) + supply.valueQty;
+
+        console.log(supply.value)
+        console.log(Number(qty));
+
+        supply.qty += Number(qty);
+        const count = supply.value / supply.qty;
+
+        console.log(count);
+
+        // await this.update(supply._id, supply);
+
+        // await this.logService.create({
+        //     message: PROCESS_MESSAGES.SUPPLY_ENTRY,
+        //     targetCode: supply.code,
+        //     targetName: supply.name
+        // });
     }
 
     async supplyOutPut({ code, qty }: ISupplyOutPutDTO) {
@@ -62,13 +71,14 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_qty_null', HttpStatus.BAD_REQUEST);
         }
 
-        supply.qty -= parseFloat(qty);
-        const count = supply.value / parseFloat(qty);
-        supply.valueQty = count - supply.valueQty;
-        // supply.valueQty = supply
-        // for (let i = 0; i < qty; i++) {
-        //     supply.valueQty = supply.valueQty - supply.value;
-        // }
+        // supply.qty -= parseFloat(qty);
+        // const count = supply.value / parseFloat(qty);
+        // supply.valueQty = (count) - supply.valueQty;
+
+        supply.qty -= Number(qty);
+        const count = supply.value / supply.qty;
+        console.log(count);
+
         await this.update(supply._id, supply);
 
         await this.logService.create({
