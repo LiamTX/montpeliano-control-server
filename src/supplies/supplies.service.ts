@@ -36,29 +36,17 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_not_found', HttpStatus.NOT_FOUND);
         }
 
-        // supply.qty += parseFloat(qty);
-        // console.log(supply.value);
-        // const count = supply.value / 0.300;
-
-        // console.log(count);
-
-        // supply.valueQty = (count) + supply.valueQty;
-
-        console.log(supply.value)
-        console.log(Number(qty));
-
         supply.qty += Number(qty);
-        const count = supply.value / supply.qty;
+        const count = Number(qty) * supply.value;
+        supply.valueQty += count;
 
-        console.log(count);
+        await this.update(supply._id, supply);
 
-        // await this.update(supply._id, supply);
-
-        // await this.logService.create({
-        //     message: PROCESS_MESSAGES.SUPPLY_ENTRY,
-        //     targetCode: supply.code,
-        //     targetName: supply.name
-        // });
+        await this.logService.create({
+            message: PROCESS_MESSAGES.SUPPLY_ENTRY,
+            targetCode: supply.code,
+            targetName: supply.name
+        });
     }
 
     async supplyOutPut({ code, qty }: ISupplyOutPutDTO) {
@@ -71,13 +59,9 @@ export class SuppliesService extends BaseService<Supply> {
             throw new HttpException('supply_qty_null', HttpStatus.BAD_REQUEST);
         }
 
-        // supply.qty -= parseFloat(qty);
-        // const count = supply.value / parseFloat(qty);
-        // supply.valueQty = (count) - supply.valueQty;
-
         supply.qty -= Number(qty);
-        const count = supply.value / supply.qty;
-        console.log(count);
+        const count = Number(qty) * supply.value;
+        supply.valueQty -= count;
 
         await this.update(supply._id, supply);
 
