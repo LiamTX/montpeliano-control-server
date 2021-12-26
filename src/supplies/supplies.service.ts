@@ -45,7 +45,8 @@ export class SuppliesService extends BaseService<Supply> {
         await this.logService.create({
             message: PROCESS_MESSAGES.SUPPLY_ENTRY,
             targetCode: supply.code,
-            targetName: supply.name
+            targetName: supply.name,
+            targetQty: qty
         });
     }
 
@@ -68,7 +69,8 @@ export class SuppliesService extends BaseService<Supply> {
         await this.logService.create({
             message: PROCESS_MESSAGES.SUPPLY_OUTPUT,
             targetCode: supply.code,
-            targetName: supply.name
+            targetName: supply.name,
+            targetQty: qty
         });
     }
 

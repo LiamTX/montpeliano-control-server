@@ -21,6 +21,9 @@ export class Log {
     targetName: string;
 
     @prop()
+    targetQty: string;
+
+    @prop()
     description?: string;
 
     @prop()
